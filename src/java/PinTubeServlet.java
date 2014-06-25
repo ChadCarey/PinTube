@@ -67,7 +67,7 @@ public class PinTubeServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        if(userController.logIn(username, password)) {
+        if(userController.validLogin(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             request.getRequestDispatcher("home.jsp").forward(request, response);
