@@ -11,30 +11,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author chad
  */
-@WebServlet(urlPatterns = {"/PinTubeServlet"})
-public class PinTubeServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/CreateUserServlet"})
+public class CreateUserServlet extends HttpServlet {
 
-    private UserController userController;
+    private static UserController userController; // should be a singleton
     
-    public PinTubeServlet() {
-        userController = new UserController();
+    public CreateUserServlet() {
+        if(userController == null) {
+            userController = new UserController();
+        }
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
+        PrintWriter out = response.getWriter();
     }
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,7 +45,7 @@ public class PinTubeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -61,22 +59,24 @@ public class PinTubeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        out.println("<h1>"+request.getMethod()+"</h1>");
-        // log in
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        // make sure the passwords are the same
+        String pass = request.getParameter("pass");
+        if (!pass.equals(request.getParameter("pass2"))) {
+            String message = "Your passwords do not match";
+            request.setAttribute("invalid", message);
+            request.getRequestDispatcher("CreateUser.jsp").forward(request, response);
+        }
         
-        if(userController.logIn(username, password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
-            
-        } else {
-            String message = "Your password is incorrect";
-            request.setAttribute("incorrect", message);
+        String user = request.getParameter("user");
+        if (userController.userExists(user)) {
+            String message = "Username is already in use";
+            request.setAttribute("invalid", message);
+            request.getRequestDispatcher("CreateUser.jsp").forward(request, response);
+        }
+        
+        if(userController.addUser(user, pass)) {
             request.getRequestDispatcher("index.jsp").forward(request, response);
-        };
+        }
     }
 
     /**

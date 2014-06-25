@@ -17,24 +17,32 @@ import javax.servlet.http.HttpSession;
  *
  * @author chad
  */
-@WebServlet(urlPatterns = {"/PinTubeServlet"})
-public class PinTubeServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/LogInServlet"})
+public class LogInServlet extends HttpServlet {
 
-    private UserController userController;
+    private static UserController userController;
     
-    public PinTubeServlet() {
-        userController = new UserController();
+    public LogInServlet() {
+        if(userController == null) {
+            userController = new UserController();
+        }
     }
     
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
+        PrintWriter out = response.getWriter();
     }
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,7 +55,7 @@ public class PinTubeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -61,22 +69,18 @@ public class PinTubeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        out.println("<h1>"+request.getMethod()+"</h1>");
-        // log in
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        if(userController.logIn(username, password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        if(userController.validLogin(user, pass)) {
+            HttpSession ses = request.getSession();
+            ses.setAttribute("user", user);
+            ses.setAttribute("pass", pass);
+            System.err.println("Forwarding page");
             request.getRequestDispatcher("home.jsp").forward(request, response);
-            
         } else {
-            String message = "Your password is incorrect";
-            request.setAttribute("incorrect", message);
+            request.setAttribute("invalid", "Invalid username / password");
             request.getRequestDispatcher("index.jsp").forward(request, response);
-        };
+        }
     }
 
     /**
@@ -88,5 +92,5 @@ public class PinTubeServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
