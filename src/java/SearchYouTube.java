@@ -6,6 +6,7 @@
 
 import com.google.gdata.client.Service;
 import com.google.gdata.client.youtube.YouTubeQuery;
+import com.google.gdata.client.youtube.YouTubeService;
 import com.google.gdata.data.*;
 import com.google.gdata.data.extensions.Rating;
 import com.google.gdata.data.geo.impl.GeoRssWhere;
@@ -179,7 +180,10 @@ public static void printVideoEntry(VideoEntry videoEntry, boolean detailed) {
         // search for puppies and include restricted content in the search results
         query.setFullTextQuery(search);
         query.setSafeSearch(YouTubeQuery.SafeSearch.NONE);
-        Service service = new Service();
+        
+        YouTubeService service = new YouTubeService("AI39si51dV26gLpWp-I582THR2vsvGyVcpkqXcUfu3HA6xUvpWOulk22KaWPyfUEVYLQesjhDg3U6lwEJzv4b10YthdxB68tlw");
+       // Service service = new Service();
+        
         
         try {
             VideoFeed videoFeed = service.query(query, VideoFeed.class);
