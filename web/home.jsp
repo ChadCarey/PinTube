@@ -23,9 +23,9 @@
             <input type="submit" value="Log Out"/>
         </form>
         
-            <form id="searchbox" action="TubeSearch" method="GET">
+            <form id="searchbox" action="SearchYouTube" method="GET">
                 <input type="text" name="search" placeholder="Search YouTube"/> 
-                <input type="button" onclick="getSearch()" value="Search"/>
+                <input type="submit" value="Search"/>
             </form>
         </header>
         <div id="main">
