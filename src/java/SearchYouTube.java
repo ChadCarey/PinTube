@@ -4,33 +4,18 @@
  * and open the template in the editor.
  */
 
-import com.google.gdata.client.Service;
-import com.google.gdata.client.youtube.YouTubeQuery;
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.*;
-import com.google.gdata.data.extensions.Rating;
-import com.google.gdata.data.geo.impl.GeoRssWhere;
-import com.google.gdata.data.media.mediarss.MediaKeywords;
-import com.google.gdata.data.media.mediarss.MediaPlayer;
-import com.google.gdata.data.media.mediarss.MediaThumbnail;
-import com.google.gdata.data.youtube.VideoEntry;
-import com.google.gdata.data.youtube.VideoFeed;
-import com.google.gdata.data.youtube.YouTubeMediaContent;
-import com.google.gdata.data.youtube.YouTubeMediaGroup;
-import com.google.gdata.data.youtube.YouTubeMediaRating;
-import com.google.gdata.data.youtube.YtPublicationState;
-import com.google.gdata.data.youtube.YtStatistics;
-import com.google.gdata.util.ServiceException;
+import com.google.api.services.samples.youtube.cmdline.youtube_cmdline_search_sample.Search;
+import com.google.api.services.samples.youtube.cmdline.youtube_cmdline_search_sample.YouTubeVideo;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.Writer;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * Developer key = AI39si7CHLZ_J7wkK6y1icBny-y8KDJ1EV3-LLxUffQQdrI-g99Tqk5svbNtHv_8PUmQjtVdaHKwLouyBW0_on3DmHbTuronXQ
@@ -83,7 +68,20 @@ public class SearchYouTube extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("creating search");
+        Search searchYouTube = new Search();
+        String search = request.getParameter("search");
+        System.out.println("starting search");
+        List<YouTubeVideo> results = searchYouTube.search(search);
+        
+        System.out.println("starting video print loop");
+        Writer out = response.getWriter();
+        for(YouTubeVideo video : results) {
+            out.write(video.getTitle() + "<br/>");
+            out.write(video.getId() + "<br/>");
+            out.write(video.getThumb() + "<br/>");
+            out.write("<br/>");
+        }
     }
 
     /**
