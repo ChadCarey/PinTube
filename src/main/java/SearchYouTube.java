@@ -68,13 +68,11 @@ public class SearchYouTube extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("creating search");
+        
         Search searchYouTube = new Search();
         String search = request.getParameter("search");
-        System.out.println("starting search");
         List<YouTubeVideo> results = searchYouTube.search(search);
         
-        System.out.println("starting video print loop");
         Writer out = response.getWriter();
         for(YouTubeVideo video : results) {
             out.write(video.getTitle() + "<br/>");

@@ -11,12 +11,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome to PinTube!</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </head>
     <body>
         <h1>Please Log In </h1>
         
         <p>${incorrect}</p>
-        <form action="PinTubeServlet" method="POST">
+        <form action="PinTubeUserServlet" method="POST">
             Username: <input name="username" type="text"/>
             <br/>
             Password: <input name="password" type="password"/>

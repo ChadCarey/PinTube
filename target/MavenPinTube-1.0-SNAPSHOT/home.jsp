@@ -12,8 +12,8 @@
         <title>JSP Page</title>
         
         <link rel="stylesheet" type="text/css" href="PinTubeStyleSheet.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/JavaScript" src="PinTubeFunctions.js"></script>
-
         
     </head>
     <body>
@@ -23,18 +23,13 @@
             <input type="submit" value="Log Out"/>
         </form>
         
-            <form id="searchbox" action="SearchYouTube" method="GET">
-                <input type="text" name="search" placeholder="Search YouTube"/> 
-                <input type="submit" value="Search"/>
-            </form>
+            <!--<form id="searchbox" method="GET">-->
+                <input type="text" name="searchQ" placeholder="Search YouTube" onkeyup="search()"/> 
+                <input type="button" onclick='search()' value="Search"/>
+            <!--</form>-->
         </header>
         <div id="main">
-            <div class="videobox">
-                <p>Test text</p>
-            </div>
-            <div class="videobox">
-                <p>Test text</p>
-            </div>
+            
         </div>
     </body>
 </html>

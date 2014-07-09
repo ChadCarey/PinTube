@@ -1,9 +1,15 @@
-/**
- * This contains the functions for the pintube website
- */
-function getUserVideos(item) 
+
+function search() 
 {
-    $.get(URL,
-    data/*to be sent(send as json?)*/,
-    function(data/*resulting data*/,status,xhr/*xmlobject*/){} );
+    var search = $('[name=searchQ]').val();
+    if (search == "") {
+        document.getElementById("main").innerHTML = "";
+        return;
+    }
+    $.get('SearchYouTube',
+    {'search' : search},
+    function(data/*resulting data*/,status,xhr/*xmlobject*/)
+    {
+        document.getElementById("main").innerHTML = data;
+    } );
 }

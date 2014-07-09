@@ -18,12 +18,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author chad
  */
-@WebServlet(urlPatterns = {"/PinTubeServlet"})
-public class PinTubeServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/PinTubeUserServlet"})
+public class PinTubeUserServlet extends HttpServlet {
 
     private UserController userController;
     
-    public PinTubeServlet() {
+    public PinTubeUserServlet() {
         userController = new UserController();
     }
     
