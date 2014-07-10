@@ -11,7 +11,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         
-        <link rel="stylesheet" type="text/css" href="PinTubeStyleSheet.css">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/JavaScript" src="PinTubeFunctions.js"></script>
         <!-- Latest compiled and minified CSS -->
