@@ -13,3 +13,13 @@ function search()
         document.getElementById("main").innerHTML = data;
     } );
 }
+
+function getUserVideos()
+{
+    $.get('YouTubeUserServlet',
+    {'req' : 'getUserVideos'},
+    function(data/*resulting data*/,status,xhr/*xmlobject*/)
+    {
+        document.getElementById("main").innerHTML = data;
+    } );
+}

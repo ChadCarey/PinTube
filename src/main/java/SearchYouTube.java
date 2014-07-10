@@ -74,11 +74,25 @@ public class SearchYouTube extends HttpServlet {
         List<YouTubeVideo> results = searchYouTube.search(search);
         
         Writer out = response.getWriter();
+        
         for(YouTubeVideo video : results) {
-            out.write(video.getTitle() + "<br/>");
-            out.write(video.getId() + "<br/>");
-            out.write(video.getThumb() + "<br/>");
-            out.write("<br/>");
+            
+            out.write("<div class='.col-md-12'");
+            out.write("<div class='row'>");
+            out.write("<div class='span6'>");
+            out.write("<h4>" + video.getTitle() + "</h4>");
+            out.write("</div>");
+            
+            out.write("<div class='span6'>");
+            out.write("<iframe width='320' ");
+            out.write("height='180' ");
+            out.write("src='//www.youtube.com/embed/");
+            out.write(video.getId());
+            out.write("'frameborder='0' ");
+            out.write("allowfullscreen></iframe>");
+            out.write("</div>");
+            out.write("</div>");
+            out.write("</div>");
         }
     }
 
